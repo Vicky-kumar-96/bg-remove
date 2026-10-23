@@ -12,8 +12,9 @@ const app = express();
 
 
 // MiddleWares
-app.use(express.json())
 app.use(cors());
+app.use('/api/user/webhooks', express.raw({ type: 'application/json' }));
+app.use(express.json())
 
 app.get("/",(req,res)=>{
   res.send("Api working");

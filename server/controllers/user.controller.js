@@ -17,7 +17,7 @@ const clerkWebHooks = async (req, res) => {
       'svix-signature': req.headers['svix-signature'],
     });
 
-    const {data, type} = req.body
+    const {data, type} = evt
 
     switch(type){
       case "user.created":{
@@ -41,12 +41,17 @@ const clerkWebHooks = async (req, res) => {
           photo:data.image_url
         }
         await User.findOneAndUpdate({clerkId:data.id},userData);
-        Response.json({})
+        res.json({})
         break;
       }
 
       case "user.deleted":{
-        await User.findOneAndReplace({clerkId:data.id});
+        await User.deleteOne({clerkId:data.id});
+        res.json({})
+        break;
+      }
+
+      default:{
         res.json({})
         break;
       }
