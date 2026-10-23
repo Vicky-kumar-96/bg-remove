@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import express from 'express'
 import cors from 'cors'
 import connetDB from './db/db.js';
+import userRouter from './routes/user.routes.js';
 
 
 // App config
@@ -17,6 +18,8 @@ app.use(cors());
 app.get("/",(req,res)=>{
   res.send("Api working");
 })
+
+app.use('/api/user',userRouter)
 
 try {
   await connetDB();
